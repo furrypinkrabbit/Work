@@ -1,0 +1,4 @@
+[submodule "ResourcesForWork"]
+	path = ResourcesForWork
+	url = https://github.com/furrypinkrabbit/ResourcesForWork.git
+	branch =master
