@@ -1,11 +1,10 @@
+using Unity.Cinemachine;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerMoveData", menuName = "Scriptable Objects/PlayerMoveData")]
 public class PlayerMoveData : ScriptableObject
 {
     public float MoveSpeed = 12f;
-    public float MaxViewAngle = 110;
-    public float ViewMoveSpeed = 12f;
     public bool isAir = false;
     public bool CanJump = true;
     public bool CanMove = true;
@@ -15,10 +14,9 @@ public class PlayerMoveData : ScriptableObject
 
 
 
-    public PlayerMoveData(float MoveSpeed = 12f,float MaxViewAngle = 120,float ViewMoveSpeed = 12f) {
+    public PlayerMoveData(float MoveSpeed = 12f) {
         this.MoveSpeed = MoveSpeed;
-        this.MaxViewAngle = MaxViewAngle;
-        this.ViewMoveSpeed = ViewMoveSpeed;
+
     }
 
 }

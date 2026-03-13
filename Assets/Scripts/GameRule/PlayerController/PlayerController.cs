@@ -1,9 +1,11 @@
 #define DeBug
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    
     public PlayerMoveData playerMoveData;
     public LayerMask layerMask;
 
@@ -11,6 +13,13 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 MoveDir;
     private Vector2 MouseDelta;
+
+
+    //初始化
+    public void InitPlayerController(PlayerMoveData playerMoveData)
+    {
+        this.playerMoveData = playerMoveData;
+    }
 
     void Awake()
     {
@@ -39,6 +48,7 @@ public class PlayerController : MonoBehaviour
         GroundCheck();
     }
 
+    //跳跃输入
     public void HandleJump(InputAction.CallbackContext ctx) {
 
         if (playerMoveData.isAir) {
@@ -53,6 +63,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    //键盘移动输入
     public void HandleMove(InputAction.CallbackContext ctx) {
         if (ctx.performed && playerMoveData.CanMove) {
            Vector2 Dir = ctx.ReadValue<Vector2>();
@@ -65,12 +76,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    public void InitPlayerController(PlayerMoveData playerMoveData)
-    {
-        this.playerMoveData = playerMoveData;
-    }
-
-
+    //地面检测
     void GroundCheck()
     {
         if (Physics.Raycast(playerMoveData.rb.position, Vector3.down, out var hit, playerMoveData.GroundRayCastDistance, layerMask))
@@ -90,10 +96,23 @@ public class PlayerController : MonoBehaviour
 
     }
 
+
+    //角色移动
     void MovePlayer()
     {
-        Vector3 targetVelocity = MoveDir * playerMoveData.MoveSpeed;
 
+        Camera mainCam = Camera.main;
+        Vector3 camForward = mainCam.transform.forward;
+        Vector3 camRight = mainCam.transform.right;
+
+        camForward.y = 0;
+        camRight.y = 0;
+        camForward.Normalize();
+        camRight.Normalize();
+
+        Vector3 moveDirection = camForward * MoveDir.z + camRight * MoveDir.x;
+
+        Vector3 targetVelocity = moveDirection * playerMoveData.MoveSpeed;
         targetVelocity.y = playerMoveData.rb.linearVelocity.y;
 
         playerMoveData.rb.linearVelocity = targetVelocity;
