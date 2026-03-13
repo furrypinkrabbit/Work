@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NodeConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Nodes>
+    <Node id="0" name="root" x="388" y="277">
+      <Properties />
+      <NextNodes>
+        <NextId>1</NextId>
+      </NextNodes>
+    </Node>
+    <Node id="1" name="SceneLobby" x="457" y="372">
+      <Properties>
+        <Property type="场景" value="00000" />
+      </Properties>
+      <NextNodes />
+    </Node>
+  </Nodes>
+</NodeConfig>
