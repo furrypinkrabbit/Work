@@ -14,7 +14,7 @@ Shader "Custom/BorderlandsGun"
 
     SubShader
     {
-        Tags { "RenderType"="Opaque" "RenderPipeline"="UniversalPipeline" }
+        Tags { "RenderType"="Opaque" "RenderPipeline"="UniversalPipeline" "Queue"="Geometry" }
         LOD 100
 
         Pass
@@ -67,28 +67,23 @@ Shader "Custom/BorderlandsGun"
 
             half4 frag(Varyings input) : SV_Target
             {
-                // 1. 计算光照
                 Light mainLight = GetMainLight();
                 float3 lightDirWS = normalize(mainLight.direction);
                 float3 normalWS = normalize(input.normalWS);
                 float NdotL = saturate(dot(normalWS, lightDirWS));
 
-                // 卡通化光照：量化为明暗两阶
                 float lightLevel = step(_LightThreshold, NdotL);
                 float3 finalColor = lerp(_ShadowColor.rgb, _BaseColor.rgb, lightLevel);
 
-                // 2. 简单高光
                 float3 viewDirWS = normalize(GetWorldSpaceViewDir(input.positionWS));
                 float3 halfDirWS = normalize(lightDirWS + viewDirWS);
                 float spec = pow(saturate(dot(normalWS, halfDirWS)), _Gloss * 100);
                 finalColor += spec * 0.3;
 
-                // 3. 边缘检测（简化版描边）
                 float edge = 1 - saturate(dot(normalWS, viewDirWS));
                 edge = step(0.8, edge);
-                finalColor = lerp(finalColor, _OutlineColor.rgb, edge * _OutlineWidth * 20);
+                finalColor = lerp(finalColor, _OutlineColor.rgb, edge * 0.5);
 
-                // 4. 全息线条效果（示例：基于UV的滚动条纹）
                 float holo = sin(input.uv.x * 20 + _Time.y * _HoloSpeed) * 0.5 + 0.5;
                 holo = step(0.9, holo);
                 finalColor = lerp(finalColor, _HoloColor.rgb, holo * 0.5);
@@ -98,11 +93,14 @@ Shader "Custom/BorderlandsGun"
             ENDHLSL
         }
 
-        // 可选：单独描边 Pass（更稳定的轮廓效果）
+        // ========== 修复完成的 描边 Pass ==========
         Pass
         {
             Name "Outline"
+            Tags { "LightMode"="SRPDefaultUnlit" }
             Cull Front
+            ZWrite On
+            ZTest LEqual
 
             HLSLPROGRAM
             #pragma vertex vert
@@ -128,9 +126,16 @@ Shader "Custom/BorderlandsGun"
             Varyings vert(Attributes input)
             {
                 Varyings output;
-                float3 offset = input.normalOS * _OutlineWidth;
-                float4 pos = input.positionOS + float4(offset, 0);
-                output.positionHCS = TransformObjectToHClip(pos.xyz);
+                
+                float3 normalWS = TransformObjectToWorldNormal(input.normalOS);
+                float3 positionWS = TransformObjectToWorld(input.positionOS.xyz);
+                float3 viewDirWS = GetWorldSpaceViewDir(positionWS);
+                float3 normalViewWS = normalize(normalWS + viewDirWS * 0.1);
+                
+                float3 offset = normalize(normalViewWS) * _OutlineWidth;
+                float3 finalPosWS = positionWS + offset;
+                output.positionHCS = TransformWorldToHClip(finalPosWS);
+                
                 return output;
             }
 
@@ -141,4 +146,5 @@ Shader "Custom/BorderlandsGun"
             ENDHLSL
         }
     }
+    FallBack "Hidden/Universal Render Pipeline/FallbackError"
 }

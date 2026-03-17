@@ -25,8 +25,14 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _OutlineWidth: 0.01
+    - _EdgeThreshold: 0.647
+    - _Gloss: 0.015
+    - _LightThreshold: 0.338
+    - _OutlineStrength: 1
+    - _OutlineWidth: 0.0052
     m_Colors:
+    - _BaseColor: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _ShadowColor: {r: 0.29999998, g: 0.29999998, b: 0.34999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
