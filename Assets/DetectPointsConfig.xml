@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<ArrayOfDetectPointData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <DetectPointData name="DetectPointCube" posX="2.85" posY="0.32315895" posZ="0.1194529" rotX="-0" rotY="0" rotZ="0" scaleX="3.25" scaleY="0.65" scaleZ="2.64" callback="" type="Cube" />
+  <DetectPointData name="DetectPointSphere" posX="-0.829" posY="0.32315895" posZ="0.1194529" rotX="-0" rotY="0" rotZ="0" scaleX="2.75" scaleY="4.75" scaleZ="2.57" callback="" type="Sphere" />
+</ArrayOfDetectPointData>
