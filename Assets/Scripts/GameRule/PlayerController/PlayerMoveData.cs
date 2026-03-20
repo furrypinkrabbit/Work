@@ -10,9 +10,10 @@ public class PlayerMoveData : ScriptableObject
     public bool CanMove = true;
     public float AirImpulseForce = 7f;
     public Rigidbody rb;
-    public float GroundRayCastDistance = 5f;
-
-
+    public float GroundRayCastDistance = 0.5f;
+    public bool JumpPreRead = false;
+    public float PreReadTime = 1f;
+    public bool CanPreReadJump = false;
 
     public PlayerMoveData(float MoveSpeed = 12f) {
         this.MoveSpeed = MoveSpeed;

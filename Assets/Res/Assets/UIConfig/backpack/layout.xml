@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UIConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Nodes>
+    <Node Width="799.999939" Height="449.999969" X="960" Y="540" name="show">
+      <Nodes>
+        <UINode Width="50" Height="50" X="374.999969" Y="-199.999985" name="slot">
+          <Nodes>
+            <UINode Width="50" Height="50" X="0" Y="-1.52587891E-05" name="slot (1)">
+              <Nodes />
+            </UINode>
+          </Nodes>
+        </UINode>
+        <UINode Width="50" Height="50" X="325" Y="-200" name="slot (3)">
+          <Nodes>
+            <UINode Width="50" Height="50" X="3.05175781E-05" Y="-4.57763672E-05" name="slot (2)">
+              <Nodes />
+            </UINode>
+          </Nodes>
+        </UINode>
+        <UINode Width="50" Height="50" X="374.999969" Y="-155" name="slot4">
+          <Nodes>
+            <UINode Width="50" Height="50" X="0" Y="0" name="slot4 (1)">
+              <Nodes />
+            </UINode>
+          </Nodes>
+        </UINode>
+        <UINode Width="50" Height="50" X="325" Y="-155" name="Image">
+          <Nodes>
+            <UINode Width="50" Height="50" X="-7.62939453E-05" Y="6.10351563E-05" name="Image (1)">
+              <Nodes />
+            </UINode>
+          </Nodes>
+        </UINode>
+      </Nodes>
+    </Node>
+  </Nodes>
+</UIConfig>

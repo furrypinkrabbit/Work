@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         MovePlayer();
+        
     }
 
     void FixedUpdate()
@@ -48,8 +49,18 @@ public class PlayerController : MonoBehaviour
         GroundCheck();
     }
 
+
     //Ã¯‘æ ‰»Î
     public void HandleJump(InputAction.CallbackContext ctx) {
+
+        if (!playerMoveData.CanJump && ctx.performed)
+        {
+            if (playerMoveData.CanPreReadJump)
+            {
+                playerMoveData.JumpPreRead = true;
+                
+            }
+        }
 
         if (playerMoveData.isAir) {
             return;
@@ -59,6 +70,8 @@ public class PlayerController : MonoBehaviour
             playerMoveData.isAir = true;
             playerMoveData.rb.AddForce(Vector3.up * playerMoveData.AirImpulseForce,ForceMode.Impulse);
         }
+
+
 
 
     }
@@ -83,15 +96,28 @@ public class PlayerController : MonoBehaviour
         {
             playerMoveData.isAir = false;
             playerMoveData.CanJump = true;
+
+            if (playerMoveData.JumpPreRead)
+            {
+                playerMoveData.rb.AddForce(Vector3.up * playerMoveData.AirImpulseForce, ForceMode.Impulse);
+                playerMoveData.JumpPreRead = false;
+                playerMoveData.CanPreReadJump = false;
+            }
         }
         else
         {
             playerMoveData.isAir = true;
             playerMoveData.CanJump = false;
+
         }
 
+        if (Physics.Raycast(playerMoveData.rb.position, Vector3.down, out var hit2, playerMoveData.GroundRayCastDistance*2f, layerMask)) {
+            playerMoveData.CanPreReadJump = true;
+        }
+
+
 #if DeBug
-        Debug.DrawLine(playerMoveData.rb.position, playerMoveData.rb.position + Vector3.down * playerMoveData.GroundRayCastDistance, Color.red, 0.1f);
+            Debug.DrawLine(playerMoveData.rb.position, playerMoveData.rb.position + Vector3.down * playerMoveData.GroundRayCastDistance, Color.red, 0.1f);
 #endif
 
     }
@@ -117,4 +143,6 @@ public class PlayerController : MonoBehaviour
 
         playerMoveData.rb.linearVelocity = targetVelocity;
     }
+
+
 }

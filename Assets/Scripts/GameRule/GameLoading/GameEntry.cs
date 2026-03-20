@@ -1,13 +1,33 @@
+using Assets.Scripts.GameRule.GameLoading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameEntry : MonoBehaviour
 {
+    private bool CanLoad = false;
+    private float Timer = 0f;
+    private float EndTime = 5f;
 
     private async void Start()
     {
-        await SceneManager.LoadSceneAsync("LoadingScene");
+
+
+
+   }
+    private void Update()
+    {
+        if (CanLoad) LoadScene();
+
+        Timer += Time.deltaTime;
+        if (Timer >= EndTime) {
+            CanLoad = true;
+        }
     }
 
+    private async void LoadScene() {
+        AsyncOperation ao = SceneManager.LoadSceneAsync("LoadingScene");
+        await ao;
+        GameBootBlackBoard.SceneLoaded = ao.isDone;
+    }
 
 }

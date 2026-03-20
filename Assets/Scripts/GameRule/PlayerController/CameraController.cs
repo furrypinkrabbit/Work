@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviour
 
     void Awake()
     {
-        // 隐藏并锁定鼠标
+    
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -33,16 +33,19 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        // 计算旋转
+        
         float mouseX = mouseDelta.x * mouseSensitivity * Time.deltaTime;
         float mouseY = mouseDelta.y * mouseSensitivity * Time.deltaTime;
 
-        // 上下旋转（限制角度）
+        
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, minClamp, maxClamp);
 
-        // 应用旋转
+        
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         playerBody.Rotate(Vector3.up * mouseX);
     }
+
+
+
 }
