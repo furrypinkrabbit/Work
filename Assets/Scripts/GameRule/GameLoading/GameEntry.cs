@@ -1,4 +1,5 @@
 using Assets.Scripts.GameRule.GameLoading;
+using Assets.Scripts.GameRule.ResManager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,12 +9,12 @@ public class GameEntry : MonoBehaviour
     private float Timer = 0f;
     private float EndTime = 5f;
 
-    private async void Start()
+    private void Start()
     {
 
 
 
-   }
+    }
     private void Update()
     {
         if (CanLoad) LoadScene();
@@ -21,6 +22,7 @@ public class GameEntry : MonoBehaviour
         Timer += Time.deltaTime;
         if (Timer >= EndTime) {
             CanLoad = true;
+            
         }
     }
 
